@@ -10,11 +10,7 @@ const char* password = "";
 const String NOSUSR  = "";
 const String NOSPASS  = "";
 //gerada aqui -> https://www.grc.com/fingerprints.htm
-const String fingerprint  = "E6:E9:08:D6:6A:7E:E7:5D:34:5D:F0:DB:28:14:DA:2B:8D:87:3A:02";
-
-
-
-const char* remote_host = "www.google.com";
+const String fingerprint  = "65:81:07:BF:EE:0D:C9:45:89:C5:2B:5B:DC:02:94:0E:FD:4B:5A:E7";
 
 void setup() {
 
@@ -58,10 +54,10 @@ void setup() {
   Serial.println(uri);
   delay(2000);
 
-  http.begin(uri,fingerprint);     //Specify request destination
+  http.begin(uri, fingerprint);    //Specify request destination
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
   http.addHeader("Cookie", http.header(SET_COOKIE));
-  httpCode = http.POST("userFake=" + NOSUSR + "&UserName=NOS/" + NOSUSR + "&Password=" + NOSPASS); //Send the request
+  httpCode = http.POST("userFake=" + NOSUSR + "&UserName=NOS/" + NOSUSR + "&Password=" + NOSPASS + "&rememberMe=true&_rememberMe=on"); //Send the request
   Serial.println(httpCode);   //Print 302 movido temp -2*/
   delay(2000);
 
@@ -86,11 +82,7 @@ void setup() {
   Serial.println(uri);
   Serial.println(httpCode);   //Print 302 movido temp -2*/
   delay(2000);
-
-  
   http.end();  //Close connection
-
-
   delay(2000);
 
 
@@ -102,9 +94,8 @@ void loop() {
 
 
   Serial.print("Pinging host ");
-  Serial.println(remote_host);
 
-  if (Ping.ping(remote_host)) {
+  if (Ping.ping("www.google.com")) {
     Serial.println("Success!!");
   } else {
     Serial.println("Error :(");
